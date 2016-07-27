@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\n# This script trains a Random Forest model based on the data,\n# saves a sample submission, and plots the relative importance\n# of the variables in making predictions\n\n# Download 1_random_forest_r_submission.csv from the output below\n# and submit it through https://www.kaggle.com/c/titanic-gettingStarted/submissions/attach\n# to enter this getting started competition!\n\nlibrary(ggplot2)\nlibrary(randomForest)\nlibrary(caret)\n\nset.seed(1006)\ntrain <- read.csv(\"train.csv\", stringsAsFactors=FALSE)\naccuracy<-0\n# avgAccu<-0\n# p=0.5\n# i=1\n# while (p<1){\nx = createDataPartition(train$Survived, p=0.7, list=FALSE)\ntraining <- train[x,]\ntesting <- train[-x,]\n\nextractFeatures <- function(data) {\n  features <- c(\"Pclass\",\n                \"Age\",\n                \"Sex\",\n                \"Parch\",\n                \"SibSp\",\n                \"Fare\",\n                \"Embarked\")\n  fea <- data[,features]\n  fea$Age[is.na(fea$Age)] <- -1\n  fea$Fare[is.na(fea$Fare)] <- median(fea$Fare, na.rm=TRUE)\n  fea$Embarked[fea$Embarked==\"\"] = \"S\"\n  fea$Sex      <- as.factor(fea$Sex)\n  fea$Embarked <- as.factor(fea$Embarked)\n  return(fea)\n}\n\ntreenum = 1\nwhile (treenum<100){\nrf <- randomForest(extractFeatures(training), as.factor(training$Survived), ntree=1, importance=TRUE)\n\nsubmission <- data.frame(PassengerId = testing$PassengerId)\nsubmission$Survived <- predict(rf, extractFeatures(testing))\nsubmission$label <- train$Survived[PassengerId=testing$PassengerId]\nsubmission$correct <- (submission$Survived==submission$label)\naccuracy[treenum] <- sum(submission$correct)/nrow(submission); accuracy[treenum]\ntreenum = treenum + 1\n}\n# avgAccu[i] <- mean(accuracy)\n# p=p+0.02\n# i=i+1\n# }\nmean(accuracy)\nplot(accuracy,type=\"l\", xlab = \"number of trees\", ylab = \"accuracy\")\n\n\nimp <- importance(rf, type=1)\nfeatureImportance <- data.frame(Feature=row.names(imp), Importance=imp[,1])\n\np <- ggplot(featureImportance, aes(x=reorder(Feature, Importance), y=Importance)) +\n  geom_bar(stat=\"identity\", fill=\"#53cfff\") +\n  coord_flip() + \n  theme_light(base_size=20) +\n  xlab(\"\") +\n  ylab(\"Importance\") + \n  ggtitle(\"Random Forest Feature Importance\\n\") +\n  theme(plot.title=element_text(size=18))\n\nggsave(\"2_feature_importance.png\", p)",
+    "created" : 1469646354598.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1076756226",
+    "id" : "DE09562F",
+    "lastKnownWriteTime" : 1469653525,
+    "last_content_update" : 1469653525656,
+    "path" : "~/study/Coursera/Titanic/scriptBenchmark.R",
+    "project_path" : "scriptBenchmark.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

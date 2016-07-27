@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Question 1, 2\ndata <- read.csv(\"seaflow_21min.csv\")\n\nstr(data)\nsummary(data)\n\nhead(data,20)\nsummary(data$pop)\n\n# Question 3\nlibrary(caret)\n# createDataPartition, Y means the vector you want to evaluate/i.e. the outcomes.\nx = createDataPartition(data$pop, p=0.5, list=FALSE)\nhead(x)\ntraining <- data[x,]\ntesting <- data[-x,]\ndim(training)\ndim(testing)\nmean(training$time)\n\n# Question 4\nlibrary(ggplot2)\nstr(data)\n\nggplot(data,aes(x=pe, y=chl_small, colour=pop))+\n  geom_point()\n\n# Question 5,6,7\nlibrary(rpart)\nfol <- formula(pop ~ fsc_small + fsc_perp + fsc_big + pe + chl_big + chl_small)\nmodel <- rpart(fol, method = \"class\", data=training)\nprint(model)\n\n# Question 8\nptA <- as.data.frame(predict(model, testing))\nx = levels(testing$pop)\nptA$max <- factor(names(ptA)[apply(ptA, 1, which.max)], levels=x)\nptA$real <- testing$pop\n\nmyfunc <- function(x){\n  m=0\n  if (x[6]==x[7]){\n   m = 1 \n  }\n  return(m)\n}\nptA$correct <- apply(ptA,1,myfunc)\naccuracy <- sum(ptA$correct)/nrow(na.omit(ptA))\n# 0.8543861\naccuracy\n\n# Question 9\nlibrary(randomForest)\nmodelForest <- randomForest(fol, data=training)\nptB <- as.data.frame(predict(modelForest, testing))\nptB$max <- predict(modelForest, testing)\nptB$real <- testing$pop\nmyfunc <- function(x){\n  m=0\n  if (x[2]==x[3]){\n    m = 1 \n  }\n  return(m)\n}\nptB$correct <- apply(ptB,1,myfunc)\naccuracy <- sum(ptB$correct)/nrow(na.omit(ptB))\n# 0.9201017\naccuracy\n\n# Question 10\nimportance(modelForest)\n\n# Question 11\nlibrary(e1071)\nmodelSVM <- svm(fol, data=training)\nptC <- as.data.frame(predict(modelSVM, testing))\nptC$max <- predict(modelSVM, testing)\nptC$real <- testing$pop\nmyfunc <- function(x){\n  m=0\n  if (x[2]==x[3]){\n    m = 1 \n  }\n  return(m)\n}\nptC$correct <- apply(ptC,1,myfunc)\naccuracy <- sum(ptC$correct)/nrow(na.omit(ptC))\n# 0.92071\naccuracy\n# Question 12\ntable(pred = ptA$max, true = ptA$real)\ntable(pred = ptB$max, true = ptB$real)\ntable(pred = ptC$max, true = ptC$real)\n\n# Question 13\nplot(data$fsc_small)\nplot(data$fsc_perp)\n\n# This looks like a categorical type\nplot(data$fsc_big)\n\nplot(data$pe)\nplot(data$chl_small)\nplot(data$chl_big)\n\n# Question 14\nwith(data,plot(time,chl_big))\nrow_to_keep = (data$file_id != 208)\ndata = data[row_to_keep,]\nx = createDataPartition(data$pop, p=0.5, list=FALSE)\ntraining <- data[x,]\ntesting <- data[-x,]\n#method A\nptA <- as.data.frame(predict(model, testing))\nx = levels(testing$pop)\nptA$max <- factor(names(ptA)[apply(ptA, 1, which.max)], levels=x)\nptA$real <- testing$pop\n\nmyfunc <- function(x){\n  m=0\n  if (x[6]==x[7]){\n    m = 1 \n  }\n  return(m)\n}\nptA$correct <- apply(ptA,1,myfunc)\naccuracy <- sum(ptA$correct)/nrow(na.omit(ptA))\n# 0.8928181\naccuracy\n\n#method B\nmodelForest <- randomForest(fol, data=training)\nptB <- as.data.frame(predict(modelForest, testing))\nptB$max <- predict(modelForest, testing)\nptB$real <- testing$pop\nmyfunc <- function(x){\n  m=0\n  if (x[2]==x[3]){\n    m = 1 \n  }\n  return(m)\n}\nptB$correct <- apply(ptB,1,myfunc)\naccuracy <- sum(ptB$correct)/nrow(na.omit(ptB))\n# 0.9703046\naccuracy\n\n#method C\nmodelSVM <- svm(fol, data=training)\nptC <- as.data.frame(predict(modelSVM, testing))\nptC$max <- predict(modelSVM, testing)\nptC$real <- testing$pop\nmyfunc <- function(x){\n  m=0\n  if (x[2]==x[3]){\n    m = 1 \n  }\n  return(m)\n}\nptC$correct <- apply(ptC,1,myfunc)\naccuracy <- sum(ptC$correct)/nrow(na.omit(ptC))\n# 0.9723594\naccuracy\n",
+    "created" : 1469649507418.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1949247682",
+    "id" : "9DA57F46",
+    "lastKnownWriteTime" : 1468527208,
+    "last_content_update" : 1468527208,
+    "path" : "~/study/Coursera/Data Science/UWDataScience/assignment5/script.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
