@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(data.table)\nlibrary(plyr)\n\ndata <- read.csv(\"sanfrancisco_incidents_summer_2014.csv\")\n\ndate <- as.Date(data$Date,format=\"%m/%d/%y\")\nday<-format(date, \"%d\")\n\ndt <- data.table(data)\n\nagdt <- aggregate(dt$Category, by=list(dt$Category,day),FUN = length)\n\nlibrary(reshape2)\n\naqw <- dcast(agdt, Group.2~Group.1)\naqw[is.na(aqw)]=0\naqw$Group.2=NULL\nhead(aqw)\nxzz <- cor(aqw)\nxzz[upper.tri(xzz,diag=T)]=NA\nmatch_ind = which(abs(xzz)>0.5,arr.ind=T);match_ind\n\nmatched <- data.frame(x=colnames(aqw)[match_ind[,2]],y=row.names(match_ind),cor=xzz[match_ind]);matched\n\n\n",
+    "created" : 1470253997945.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1100735392",
+    "id" : "A46D4FB3",
+    "lastKnownWriteTime" : 1470408253,
+    "last_content_update" : 1470408253127,
+    "path" : "~/study/Coursera/Data Science/UWDataScience/assignment6/script.R",
+    "project_path" : "script.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

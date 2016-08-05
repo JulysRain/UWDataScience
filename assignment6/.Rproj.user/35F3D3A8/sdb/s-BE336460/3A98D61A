@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1470337170670.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "3A98D61A",
+    "lastKnownWriteTime" : 3904937756146546993,
+    "last_content_update" : 1470337170670,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "wc8ahfiksl",
+        "caption" : "aqw",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=aqw&cache_key=wc8ahfiksl",
+        "displayedObservations" : 31,
+        "environment" : "",
+        "object" : "aqw",
+        "totalObservations" : 31,
+        "variables" : 35
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

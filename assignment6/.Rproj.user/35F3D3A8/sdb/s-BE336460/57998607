@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1470337168650.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "57998607",
+    "lastKnownWriteTime" : 1470336845,
+    "last_content_update" : 1470337168650,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "r4fc46b10j",
+        "caption" : "agdt",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=agdt&cache_key=r4fc46b10j",
+        "displayedObservations" : 720,
+        "environment" : "",
+        "object" : "agdt",
+        "totalObservations" : 720,
+        "variables" : 3
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
